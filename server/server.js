@@ -4,6 +4,7 @@ const express = require("express"),
   notesRouter = require("./routes/note.router"),
   userRouter = require("./routes/user.router");
 const path = require("path");
+require("../build/index.html");
 
 const app = express();
 app.use(cors());
@@ -11,10 +12,10 @@ app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, "build")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.get("/*", function(req, res) {
-  console.log(__dirname);
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
+//app.get("/*", function(req, res) {
+//console.log(__dirname);
+//res.sendFile(path.join(__dirname + "../build/index.html"));
+//s});
 app.get("/", function(req, res) {
   res.end("");
 });
