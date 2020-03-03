@@ -16,6 +16,7 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express-bearer-token": "^2.4.0",
+    "express-favicon": "^2.0.1",
     "express-session": "^1.17.0",
     "get-form-data": "^2.0.0",
     "is-promise": "^2.1.0",
@@ -37,7 +38,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "build": "npm install",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
