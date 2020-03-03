@@ -4,7 +4,6 @@ const express = require("express"),
   notesRouter = require("./routes/note.router"),
   userRouter = require("./routes/user.router");
 const path = require("path");
-require("../build/index.html");
 
 const app = express();
 app.use(cors());
