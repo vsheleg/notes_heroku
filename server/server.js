@@ -4,7 +4,6 @@ const express = require("express"),
   notesRouter = require("./routes/note.router"),
   userRouter = require("./routes/user.router");
 const path = require("path");
-require("../build");
 const port = process.env.PORT || 8080;
 
 const app = express();
