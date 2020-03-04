@@ -5,6 +5,7 @@ import "./signup.css";
 import { Redirect } from "react-router-dom";
 
 export default function Signup({}) {
+  console.log(process.env.DATABASE_URL);
   const [redirect, setRedirect] = useState(false);
   const passwordRef = useRef(null);
   const usernameRef = useRef(null);
