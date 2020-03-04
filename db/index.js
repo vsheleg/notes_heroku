@@ -1,6 +1,10 @@
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize("notes-app", "postgres", "1111", {
-  dialect: "postgres"
+const sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
+  dialect: "postgres",
+  protocol: "postgres",
+  port: match[4],
+  host: match[3],
+  logging: true
 });
 
 const User = sequelize.define("users", {
