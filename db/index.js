@@ -12,9 +12,6 @@ const User = sequelize.define("users", {
     primaryKey: true,
     allowNull: true
   },
-  userbay: {
-    sequelize
-  },
   username: {
     type: Sequelize.CHAR,
     allowNull: true
