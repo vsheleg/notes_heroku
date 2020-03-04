@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_GEEY_URL, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   protocol: "postgres",
   port: process.env.PORT,

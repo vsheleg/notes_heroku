@@ -5,13 +5,11 @@ import "./signup.css";
 import { Redirect } from "react-router-dom";
 
 export default function Signup({}) {
-  console.log(process.env.PORT);
   const [redirect, setRedirect] = useState(false);
   const passwordRef = useRef(null);
   const usernameRef = useRef(null);
   const emailRef = useRef(null);
   const confirmedPasswordRef = useRef(null);
-
   function handleSubmit(e) {
     e.preventDefault();
     const user = {
