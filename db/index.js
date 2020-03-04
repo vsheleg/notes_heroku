@@ -1,9 +1,8 @@
-const Sequelize = require("sequelize");
+const Sequelize = require("sequelize-heroku");
+const match = process.env.DATABASE_URL.match();
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   protocol: "postgres",
-  port: match[4],
-  port: match[3],
   logging: true
 });
 
@@ -14,12 +13,16 @@ const User = sequelize.define("users", {
     primaryKey: true,
     allowNull: true
   },
+  userbay: {
+    sequelize
+  },
   username: {
     type: Sequelize.CHAR,
     allowNull: true
   },
   password: {
     type: Sequelize.CHAR,
+    text: Sequelize.TEXT,
     allowNull: true
   },
 
