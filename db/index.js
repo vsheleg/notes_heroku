@@ -1,5 +1,4 @@
-const Sequelize = require("sequelize-heroku");
-const match = process.env.DATABASE_URL.match();
+const Sequelize = require("sequelize");
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   protocol: "postgres",
