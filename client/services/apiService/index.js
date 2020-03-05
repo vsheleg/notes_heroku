@@ -2,6 +2,7 @@ const BASEURI = process.env.PORT;
 const KEY = "note-token";
 
 async function request(path, params = {}) {
+  alert(BASEURI + path);
   const token = await localStorage.getItem(KEY);
   return fetch(BASEURI + path, {
     ...params,
