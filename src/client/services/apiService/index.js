@@ -1,4 +1,4 @@
-const BASEURI = process.env.PORT;
+const BASEURI = "https://calm-river-32384.herokuapp.com/";
 const KEY = "note-token";
 
 async function request(path, params = {}) {
