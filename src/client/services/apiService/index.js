@@ -1,11 +1,11 @@
 const BASEURI = "https://calm-river-32384.herokuapp.com/";
-const proxyUrl = "https://cors-anywhere.herokuapp.com/";
 const KEY = "note-token";
 
 async function request(path, params = {}) {
   const token = await localStorage.getItem(KEY);
-  return fetch(proxyUrl + BASEURI + path, {
+  return fetch(BASEURI + path, {
     ...params,
+    mode: "no-cors",
     headers: {
       Authorization: token,
       "Content-Type": "application/json",
