@@ -5,6 +5,7 @@ async function request(path, params = {}) {
   const token = await localStorage.getItem(KEY);
   return fetch(BASEURI + path, {
     ...params,
+    mode: "cors",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
