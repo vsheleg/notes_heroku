@@ -6,7 +6,7 @@ async function request(path, params = {}) {
   return fetch(BASEURI + path, {
     ...params,
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
       ...(params.headers || {})
     }
