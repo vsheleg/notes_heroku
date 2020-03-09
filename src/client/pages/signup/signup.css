@@ -59,11 +59,11 @@ ul.nav li {
     font-family:var(--main-font);
     font-size: larger;
 
-    height:30px;
+
     width: 50%;
 
     text-align: center;
-    padding: 10px 0px;
+
 }
 
 .link {
@@ -71,6 +71,14 @@ ul.nav li {
     text-decoration: none;
     color:white;
     width: 50%;
+    
+    
+}
+a.link {
+    display: block;
+    height:30px;
+    width: 100%;
+    padding: 10px 0px;
 }
 ul.nav li:hover {
     background-color:grey;
