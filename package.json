@@ -1,14 +1,16 @@
 {
-  "name": "notes-app",
+  "name": "my-app",
   "version": "0.1.0",
-  "engines": {
-    "node": "12.x"
-  },
-  "main": "server.js",
   "private": true,
+  "engines": {
+    "npm": "5.7.1",
+    "node": "9.5.0"
+  },
   "dependencies": {
+    "@material-ui/core": "^4.9.5",
+    "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.4.1",
+    "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
     "body-parser": "^1.19.0",
     "config": "^3.3.0",
@@ -20,7 +22,6 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express-bearer-token": "^2.4.0",
-    "express-favicon": "^2.0.1",
     "express-session": "^1.17.0",
     "get-form-data": "^2.0.0",
     "is-promise": "^2.1.0",
@@ -38,10 +39,11 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "remove-blank-lines": "^1.1.1",
-    "sequelize": "^5.21.4"
+    "sequelize": "^5.21.4",
+    "typeface-roboto": "0.0.75"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
