@@ -3,6 +3,7 @@
     --add-theme-color:#013ca6;
     --main-font: 'Podkova';
 }
+
 hr {
     width: 250px;
 }
@@ -58,10 +59,7 @@ ul.nav li {
     background-color:var(--add-theme-color);
     font-family:var(--main-font);
     font-size: larger;
-
-
     width: 50%;
-
     text-align: center;
 
 }
@@ -71,8 +69,6 @@ ul.nav li {
     text-decoration: none;
     color:white;
     width: 50%;
-    
-    
 }
 a.link {
     display: block;
@@ -99,4 +95,8 @@ ul.nav li:hover {
 #form-header {
     font-size: x-large;
     font-weight: 500;
+}
+
+ul.nav {
+    display: inline;
 }
