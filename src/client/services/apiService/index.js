@@ -1,11 +1,10 @@
-const BASEURI = "https://calm-river-32384.herokuapp.com/";
+const BASEURI = "http://localhost:3002/";
 const KEY = "note-token";
 
 async function request(path, params = {}) {
   const token = await localStorage.getItem(KEY);
   return fetch(BASEURI + path, {
     ...params,
-    mode: "cors",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -21,7 +20,7 @@ async function request(path, params = {}) {
 }
 function deleteData(url) {
   return request(url, {
-    method: "delete"
+    method: "delete,post"
   });
 }
 

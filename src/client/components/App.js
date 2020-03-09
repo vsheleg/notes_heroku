@@ -5,9 +5,10 @@ import AddButton from "./Button/AddButton";
 import "./App.css";
 import noteService from "../services/note.service.js";
 
-export default function App({}) {
+export default function App({ onDefineHeader }) {
   const [notes, setNotes] = useState([]);
   const [redirect, setRedirect] = useState(false);
+  onDefineHeader(window.location.pathname);
 
   const updateItems = () => {
     let result = noteService.loadAllNotes();

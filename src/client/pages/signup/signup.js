@@ -4,12 +4,13 @@ import "../main.css";
 import "./signup.css";
 import { Redirect } from "react-router-dom";
 
-export default function Signup({}) {
+export default function Signup({ onDefineHeader }) {
   const [redirect, setRedirect] = useState(false);
   const passwordRef = useRef(null);
   const usernameRef = useRef(null);
   const emailRef = useRef(null);
   const confirmedPasswordRef = useRef(null);
+  onDefineHeader(window.location.pathname);
 
   function handleSubmit(e) {
     e.preventDefault();

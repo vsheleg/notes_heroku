@@ -5,10 +5,11 @@ import "../main.css";
 import "./login.css";
 const KEY = "note-token";
 
-export default function Signin({}) {
+export default function Signin({ onDefineHeader }) {
   const passwordRef = useRef(null);
   const emailRef = useRef(null);
   const [redirect, setRedirect] = useState(false);
+  onDefineHeader(window.location.pathname);
 
   function handleSubmit(e) {
     e.preventDefault();
