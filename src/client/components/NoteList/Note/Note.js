@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import noteService from "../../../services/note.service";
+import Button from "@material-ui/core/Button";
+import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
+import "typeface-roboto";
 import "./Note.css";
 import "../../../pages/signup/signup.css";
 
@@ -38,8 +44,35 @@ export default function Note({ note, onDelete }) {
         <span id="title">{note}</span>
         <hr id="title-line" />
         <div className="note-content">{content}</div>
-        <input type="button" onClick={deleteItem} name="delete" />
-        <input type="button" onClick={editItem} name="edit" />
+
+        <ButtonGroup
+          id="button-group"
+          variant="contained"
+          color="primary"
+          edge="end"
+          aria-label="contained primary button group"
+          size="small"
+        >
+          <IconButton
+            className="icon-button"
+            edge="end"
+            color="default"
+            onClick={editItem}
+            name="edit"
+          >
+            <EditTwoToneIcon />
+          </IconButton>
+          <IconButton
+            className="icon-button"
+            aria-label="delete"
+            color="default"
+            onClick={deleteItem}
+            edge="end"
+            name="delete"
+          >
+            <DeleteIcon />
+          </IconButton>
+        </ButtonGroup>
         {editInput ? (
           <input type="text" name="editNote" id="editNote" ref={textInput} />
         ) : null}

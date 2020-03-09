@@ -4,7 +4,7 @@ import "./main.css";
 
 export default function Header({}) {
   return (
-    <ul class="nav">
+    <ul className="nav">
       <li>
         <Link className="link" to="/signup">
           Sign up

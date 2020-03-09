@@ -1,13 +1,16 @@
 :root {
     --main-note-color:#f8dfc2;
     --add-theme-color:#013ca6;
-    --main-font: 'Podkova';
+    --main-font: 'Roboto';
 }
 
 body {
     text-align:center;
 }
+#button-group {
+    float: right;
 
+}
 hr#title-line {
     width: 165px;
     background-color: grey;
@@ -49,7 +52,10 @@ hr#title-line {
 input#editNote {    
     float:right;
     display: block;
-    width:80px;
+    height: 25px;
+    width: 87px;
+    border-radius: 3%;
+    border:none;
     position: relative;
 }
 .note-content {
@@ -74,20 +80,8 @@ ul {
     padding:0;
     list-style-type: none;
 }
-input[name="delete"] {
-    display:block;
-    width:10px;
-    height:25px;
-    float:right;
-
-    border: none;
-    background-color: transparent;
-    background-image: url('images/close.png');
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    background-position: center;
-    opacity: 0.5;
-   
+.icon-button {
+    float: right;
 }
 input[name="edit"] {
     display:block;
