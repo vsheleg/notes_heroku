@@ -10,6 +10,7 @@ export default function Signin({ onDefineHeader }) {
   const emailRef = useRef(null);
   const [redirect, setRedirect] = useState(false);
   onDefineHeader(window.location.pathname);
+  document.title = "Login";
 
   function handleSubmit(e) {
     e.preventDefault();

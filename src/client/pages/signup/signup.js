@@ -11,6 +11,7 @@ export default function Signup({ onDefineHeader }) {
   const emailRef = useRef(null);
   const confirmedPasswordRef = useRef(null);
   onDefineHeader(window.location.pathname);
+  document.title = "Signup";
 
   function handleSubmit(e) {
     e.preventDefault();

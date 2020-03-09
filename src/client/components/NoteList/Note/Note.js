@@ -7,6 +7,7 @@ export default function Note({ note, onDelete }) {
   const [editInput, setEditInput] = useState(false);
   const [content, setContent] = useState("");
   const textInput = useRef(null);
+  document.title = "Notes";
 
   const updateItems = () => {
     noteService.loadNote(note).then(setContent);

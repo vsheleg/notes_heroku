@@ -13,6 +13,7 @@ import "./main.css";
 
 export default function Main({}) {
   const [header, setHeader] = useState("");
+  document.title = "Home";
 
   function defineHeader(header) {
     if (header === "/notes") {
