@@ -20,7 +20,7 @@ async function request(path, params = {}) {
 }
 function deleteData(url) {
   return request(url, {
-    method: "delete,post"
+    method: "delete"
   });
 }
 
