@@ -15,7 +15,7 @@ export default function AddButton({ onAdd }) {
     <ButtonGroup
       className="buttonGroup"
       variant="contained"
-      color="default"
+      color="primary"
       aria-label="contained default button group"
     >
       <Input

@@ -9,14 +9,14 @@ import "typeface-roboto";
 import "./Note.css";
 import "../../../pages/signup/signup.css";
 
-export default function Note({ note, onDelete }) {
+export default function Note({ note, onDelete, typeOfNotes }) {
   const [editInput, setEditInput] = useState(false);
   const [content, setContent] = useState("");
   const textInput = useRef(null);
   document.title = "Notes";
 
   const updateItems = () => {
-    noteService.loadNote(note).then(setContent);
+    noteService.loadNote(note, typeOfNotes).then(setContent);
   };
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Note({ note, onDelete }) {
   async function editItem() {
     if (editInput) {
       const newValue = textInput.current.value;
-      await noteService.editNote({ val: newValue }, note);
+      await noteService.editNote({ val: newValue }, note, typeOfNotes);
       setContent(newValue);
       setEditInput(false);
     } else {
@@ -39,7 +39,7 @@ export default function Note({ note, onDelete }) {
   }
 
   return (
-    <div>
+    <div className="note-section">
       <div className="note">
         <span id="title">{note}</span>
         <hr id="title-line" />

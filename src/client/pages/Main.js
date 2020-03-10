@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { createBrowserHistory } from "history";
 import { useState } from "react";
-import { useEffect } from "react";
 import React from "react";
 import App from "../components/App";
 import Signin from "./login/login";
@@ -13,16 +11,18 @@ import "./main.css";
 
 export default function Main({}) {
   const [header, setHeader] = useState("");
-  document.title = "Home";
 
   function defineHeader(header) {
     if (header === "/notes") {
-      setHeader("notes");
+      setHeader("Notes");
+    } else if (header === "/my-notes") {
+      setHeader("My Notes");
     } else {
       setHeader("home");
     }
+    document.title = header;
   }
-  if (header === "notes") {
+  if (header === "Notes" || header === "My Notes") {
     return (
       <Router>
         <NotesHeader />
@@ -34,7 +34,10 @@ export default function Main({}) {
             <Signin onDefineHeader={defineHeader} />
           </Route>
           <Route path="/notes">
-            <App onDefineHeader={defineHeader} />
+            <App typeOfNotes="all" onDefineHeader={defineHeader} />
+          </Route>
+          <Route path="/my-notes">
+            <App typeOfNotes="personal" onDefineHeader={defineHeader} />
           </Route>
         </Switch>
       </Router>
@@ -51,7 +54,10 @@ export default function Main({}) {
           <Signin onDefineHeader={defineHeader} />
         </Route>
         <Route path="/notes">
-          <App onDefineHeader={defineHeader} />
+          <App typeOfNotes="all" onDefineHeader={defineHeader} />
+        </Route>
+        <Route path="/my-notes">
+          <App typeOfNotes="personal" onDefineHeader={defineHeader} />
         </Route>
       </Switch>
     </Router>

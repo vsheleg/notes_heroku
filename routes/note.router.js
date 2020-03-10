@@ -6,10 +6,10 @@ const notesRouter = express.Router();
 notesRouter.use(middleware.resolveUser);
 notesRouter.use(middleware.validateUser);
 
-notesRouter.delete("/delete/:noteId", controller.deleteNote);
-notesRouter.get("/read/:noteId", controller.readNote);
-notesRouter.get("/readAll", controller.getNotes);
-notesRouter.post("/edit/:noteId", controller.editNote);
-notesRouter.post("/add", controller.addNote);
+notesRouter.delete("/delete/:noteId/:typeOfNotes", controller.deleteNote);
+notesRouter.get("/read/:noteId/:typeOfNotes", controller.readNote);
+notesRouter.get("/readAll/:typeOfNotes", controller.getNotes);
+notesRouter.post("/edit/:noteId/:typeOfNotes", controller.editNote);
+notesRouter.post("/add/:typeOfNotes", controller.addNote);
 
 module.exports = notesRouter;
