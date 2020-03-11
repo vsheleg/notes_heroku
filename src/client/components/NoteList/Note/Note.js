@@ -44,9 +44,6 @@ export default function Note({ note, onDelete, typeOfNotes }) {
     }
   }
   if (redirect) {
-    const copyText = `/shared-note/${note}/${typeOfNotes}`;
-    copyText.select();
-    document.execCommand("copy");
     return <Redirect to={`/shared-note/${note}/${typeOfNotes}`} />;
   }
   return (
