@@ -1,4 +1,4 @@
-const BASEURI = "https://safe-cove-74538.herokuapp.com/";
+const BASEURI = "https://calm-river-32384.herokuapp.com/";
 const KEY = "note-token";
 
 async function request(path, params = {}) {
