@@ -44,6 +44,9 @@ export default function Note({ note, onDelete, typeOfNotes }) {
     }
   }
   if (redirect) {
+    const copyText = `/shared-note/${note}/${typeOfNotes}`;
+    copyText.select();
+    document.execCommand("copy");
     return <Redirect to={`/shared-note/${note}/${typeOfNotes}`} />;
   }
   return (
@@ -55,7 +58,7 @@ export default function Note({ note, onDelete, typeOfNotes }) {
           {editInput ? (
             <input
               type="text"
-              placeholder="Enter new note content"
+              placeholder="Enter new note"
               name="editNote"
               id="editNote"
               ref={editDivRef}
