@@ -7,8 +7,8 @@
 body {
     text-align:center;
 }
-#button-group {
-    float: right;
+div#button-group {
+    
 
 }
 hr#title-line {
@@ -39,7 +39,7 @@ hr#title-line {
     height:170px;
     display: block;
     margin-right:8px;
-    padding: 10px;
+    padding: 5px 10px 15px 5px;
     
     font-family: var(--main-font);
 
@@ -50,14 +50,36 @@ hr#title-line {
 }
 
 input#editNote {    
-    float:right;
+
     display: block;
-    height: 25px;
-    width: 60%;
-    border-radius: 3%;
-    border:none;
-    position: relative;
+   width:100%;
+   border:none;
+   height:100%;
+   background-color:var(--main-note-color);
+
 }
+input#editNote:focus {
+    background-color:var(--main-note-color);
+    border:none;
+    font-size: medium;
+    outline: none;
+    font-family: var(--main-font);
+}
+input#editNote:enabled {
+    background-color:var(--main-note-color);
+    border:none;
+    font-size: medium;
+    outline: none;
+    font-family: var(--main-font);
+}
+input#editNote:active {
+    background-color:var(--main-note-color);
+    border:none;
+    font-size: medium;
+    outline: none;
+    font-family: var(--main-font);
+}
+
 .note-content {
     display: block;
     padding:5px;
@@ -70,7 +92,9 @@ input#editNote {
     white-space: normal;
 
 }
-
+.shared-note {
+    width:200px;
+}
 li {
     width:200px;
     list-style-type: none;    
