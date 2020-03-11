@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import NoteList from "./NoteList/NoteList";
 import { Redirect } from "react-router-dom";
 import AddButton from "./Button/AddButton";
@@ -24,7 +24,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
   };
   useEffect(() => {
     updateItems();
-  });
+  }, [typeOfNotes]);
 
   async function deleteNote(note) {
     await noteService.deleteNote(note, typeOfNotes);
