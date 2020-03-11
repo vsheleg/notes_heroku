@@ -24,7 +24,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
   };
   useEffect(() => {
     updateItems();
-  }, [typeOfNotes]);
+  }, [typeOfNotes, redirect]);
 
   async function deleteNote(note) {
     await noteService.deleteNote(note, typeOfNotes);

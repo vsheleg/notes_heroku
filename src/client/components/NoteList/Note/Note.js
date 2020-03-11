@@ -21,7 +21,7 @@ export default function Note({ note, onDelete, typeOfNotes }) {
 
   useEffect(() => {
     updateItems();
-  }, [editInput]);
+  }, [editInput, typeOfNotes]);
 
   function deleteItem() {
     onDelete(note);
