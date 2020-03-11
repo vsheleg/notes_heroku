@@ -6,6 +6,7 @@ import Signin from "./login/login";
 import Signup from "./signup/signup";
 import Header from "./Header";
 import NotesHeader from "./NotesHeader";
+import NotePage from "./NotePage";
 
 import "./main.css";
 
@@ -17,6 +18,8 @@ export default function Main({}) {
       setHeader("Notes");
     } else if (header === "/my-notes") {
       setHeader("My Notes");
+    } else if (header === "/shared-note") {
+      setHeader("Note");
     } else {
       setHeader("home");
     }
@@ -39,6 +42,9 @@ export default function Main({}) {
           <Route path="/my-notes">
             <App typeOfNotes="personal" onDefineHeader={defineHeader} />
           </Route>
+          <Route path="/shared-note/:id/:typeOfNotes">
+            <NotePage />
+          </Route>
         </Switch>
       </Router>
     );
@@ -58,6 +64,9 @@ export default function Main({}) {
         </Route>
         <Route path="/my-notes">
           <App typeOfNotes="personal" onDefineHeader={defineHeader} />
+        </Route>
+        <Route path="/shared-note/:id/:typeOfNotes">
+          <NotePage />
         </Route>
       </Switch>
     </Router>

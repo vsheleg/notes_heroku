@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Redirect } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import noteService from "../../../services/note.service";
-import Button from "@material-ui/core/Button";
+import ShareIcon from "@material-ui/icons/Share";
 import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
 import "typeface-roboto";
 import "./Note.css";
@@ -11,8 +12,9 @@ import "../../../pages/signup/signup.css";
 
 export default function Note({ note, onDelete, typeOfNotes }) {
   const [editInput, setEditInput] = useState(false);
+  const [redirect, setRedirect] = useState(false); //redirect to shared note
   const [content, setContent] = useState("");
-  const textInput = useRef(null);
+  const editDivRef = useRef(null);
   document.title = "Notes";
 
   const updateItems = () => {
@@ -26,10 +28,14 @@ export default function Note({ note, onDelete, typeOfNotes }) {
   function deleteItem() {
     onDelete(note);
   }
+  function shareNote() {
+    setRedirect(true);
+  }
 
   async function editItem() {
     if (editInput) {
-      const newValue = textInput.current.value;
+      const newValue = editDivRef.current.value;
+      console.log(newValue);
       await noteService.editNote({ val: newValue }, note, typeOfNotes);
       setContent(newValue);
       setEditInput(false);
@@ -37,45 +43,63 @@ export default function Note({ note, onDelete, typeOfNotes }) {
       setEditInput(true);
     }
   }
-
+  if (redirect) {
+    return <Redirect to={`/shared-note/${note}/${typeOfNotes}`} />;
+  }
   return (
     <div className="note-section">
       <div className="note">
         <span id="title">{note}</span>
         <hr id="title-line" />
-        <div className="note-content">{content}</div>
-
-        <ButtonGroup
-          id="button-group"
-          variant="contained"
-          color="primary"
-          edge="end"
-          aria-label="contained primary button group"
-          size="small"
-        >
-          <IconButton
-            className="icon-button"
-            edge="end"
-            color="default"
-            onClick={editItem}
-            name="edit"
+        <div className="note-content">
+          {editInput ? (
+            <input
+              type="text"
+              placeholder="Enter new note content"
+              name="editNote"
+              id="editNote"
+              ref={editDivRef}
+            />
+          ) : (
+            content
+          )}
+        </div>
+        <div id="button-group">
+          <ButtonGroup
+            variant="contained"
+            color="primary"
+            aria-label="contained primary button group"
+            size="small"
           >
-            <EditTwoToneIcon />
-          </IconButton>
-          <IconButton
-            className="icon-button"
-            aria-label="delete"
-            color="default"
-            onClick={deleteItem}
-            edge="end"
-            name="delete"
-          >
-            <DeleteIcon />
-          </IconButton>
-        </ButtonGroup>
-        {editInput ? (
-          <input type="text" name="editNote" id="editNote" ref={textInput} />
-        ) : null}
+            <IconButton
+              className="icon-button"
+              color="default"
+              onClick={editItem}
+              name="edit"
+            >
+              <EditTwoToneIcon />
+            </IconButton>
+            <IconButton
+              className="icon-button"
+              aria-label="delete"
+              color="default"
+              onClick={deleteItem}
+              edge="end"
+              name="delete"
+            >
+              <DeleteIcon />
+            </IconButton>
+            <IconButton
+              onClick={shareNote}
+              className="icon-button"
+              color="default"
+              edge="end"
+              name="share"
+            >
+              <ShareIcon />
+            </IconButton>
+          </ButtonGroup>
+        </div>
       </div>
     </div>
   );
