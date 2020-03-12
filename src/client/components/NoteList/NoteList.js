@@ -3,7 +3,7 @@ import React from "react";
 import "./Note/Note.css";
 import Note from "./Note/Note";
 
-function NoteList({ notes, onDelete, onAdd, onEdit, typeOfNotes }) {
+function NoteList({ notes, onDelete, onAdd, onEdit, typeOfNotes, access }) {
   const listNotes = notes.map(elem => (
     <li key={elem}>
       <Note
@@ -11,6 +11,7 @@ function NoteList({ notes, onDelete, onAdd, onEdit, typeOfNotes }) {
         onDelete={onDelete}
         onAdd={onAdd}
         onEdit={onEdit}
+        access={access}
         typeOfNotes={typeOfNotes}
       />
     </li>

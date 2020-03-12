@@ -8,7 +8,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import GroupIcon from "@material-ui/icons/Group";
 import "./AsideMenu.css";
 
-export default function AsideMenu({}) {
+export default function AsideMenu({ access }) {
   const [allNotes, setAllNotes] = useState(false);
   const [myNotes, setMyNotes] = useState(false);
 
@@ -29,23 +29,27 @@ export default function AsideMenu({}) {
   if (myNotes) {
     return <Redirect to="/my-notes" from="/notes" />;
   }
-  return (
-    <div>
-      <Drawer variant="permanent" open="true" anchor="left" className="menu">
-        <MenuItem className="header-menu"></MenuItem>
-        <hr />
-        <div className="menuItem">
-          <MenuItem onClick={redirectMyNotes}>
-            <PersonIcon className="icon" />
-            My notes
-          </MenuItem>
-        </div>
-        <div className="menuItem">
-          <MenuItem onClick={redirectAllNotes}>
-            <GroupIcon className="icon" /> All Notes
-          </MenuItem>
-        </div>
-      </Drawer>
-    </div>
-  );
+  if (access) {
+    return (
+      <div>
+        <Drawer variant="permanent" open="true" anchor="left" className="menu">
+          <MenuItem className="header-menu"></MenuItem>
+          <hr />
+          <div className="menuItem">
+            <MenuItem onClick={redirectMyNotes}>
+              <PersonIcon className="icon" />
+              My notes
+            </MenuItem>
+          </div>
+          <div className="menuItem">
+            <MenuItem onClick={redirectAllNotes}>
+              <GroupIcon className="icon" /> All Notes
+            </MenuItem>
+          </div>
+        </Drawer>
+      </div>
+    );
+  } else {
+    return <div></div>;
+  }
 }

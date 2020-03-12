@@ -24,14 +24,7 @@ export default function NotePage({ onDefineHeader }) {
     setRedirect(true);
   }
   if (redirect) {
-    const link =
-      "https://notes-app0.herokuapp.com/shared-note/:id/:typeOfNotes";
-    let text = document.createElement("textarea");
-    document.body.appendChild(text);
-    text.value = link;
-    text.select();
-    document.execCommand("copy");
-    document.body.removeChild(text);
+    return <Redirect to="/notes" />;
   }
   return (
     <div className="shared-note">

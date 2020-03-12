@@ -7,7 +7,6 @@ import Signup from "./signup/signup";
 import Header from "./Header";
 import NotesHeader from "./NotesHeader";
 import NotePage from "./NotePage";
-
 import "./main.css";
 
 export default function Main({}) {
@@ -21,7 +20,7 @@ export default function Main({}) {
     } else if (header === "/shared-note") {
       setHeader("Notes");
     } else {
-      setHeader("home");
+      setHeader("Home");
     }
     document.title = header;
   }

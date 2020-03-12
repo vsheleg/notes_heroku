@@ -10,7 +10,7 @@ import "typeface-roboto";
 import "./Note.css";
 import "../../../pages/signup/signup.css";
 
-export default function Note({ note, onDelete, typeOfNotes }) {
+export default function Note({ note, onDelete, typeOfNotes, access }) {
   const [editInput, setEditInput] = useState(false);
   const [redirect, setRedirect] = useState(false); //redirect to shared note
   const [content, setContent] = useState("");
@@ -51,6 +51,17 @@ export default function Note({ note, onDelete, typeOfNotes }) {
     textarea.select();
     document.execCommand("copy");
     document.body.removeChild(textarea);
+  }
+  if (!access) {
+    return (
+      <div className="note-section">
+        <div className="note">
+          <span id="title">{note}</span>
+          <hr id="title-line" />
+          <div className="note-content">{content}</div>
+        </div>
+      </div>
+    );
   }
   return (
     <div className="note-section">

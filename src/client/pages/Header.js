@@ -15,6 +15,11 @@ export default function Header({}) {
           Sign in
         </Link>
       </li>
+      <li>
+        <Link className="link" to="/notes">
+          Feed
+        </Link>
+      </li>
     </ul>
   );
 }
