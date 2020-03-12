@@ -34,4 +34,5 @@ function post(url, data) {
     body: JSON.stringify(data)
   });
 }
+
 export default { get, post, deleteData };

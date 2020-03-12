@@ -43,7 +43,7 @@ export default function Main({}) {
             <App typeOfNotes="personal" onDefineHeader={defineHeader} />
           </Route>
           <Route path="/shared-note/:id/:typeOfNotes">
-            <NotePage />
+            <NotePage onDefineHeader={defineHeader} />
           </Route>
         </Switch>
       </Router>
@@ -66,7 +66,7 @@ export default function Main({}) {
           <App typeOfNotes="personal" onDefineHeader={defineHeader} />
         </Route>
         <Route path="/shared-note/:id/:typeOfNotes">
-          <NotePage />
+          <NotePage onDefineHeader={defineHeader} />
         </Route>
       </Switch>
     </Router>

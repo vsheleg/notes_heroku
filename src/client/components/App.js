@@ -46,9 +46,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
     return (
       <div id="container">
         <div id="aside">
-          <hr />
           <AsideMenu />
-          <hr />
         </div>
         <div id="content">
           <input

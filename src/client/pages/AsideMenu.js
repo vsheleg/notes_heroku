@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { MenuList } from "@material-ui/core";
-import { styled } from "@material-ui/core/styles";
+//import { MenuList } from "@material-ui/core";
 import { MenuItem } from "@material-ui/core";
+import { Drawer } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
-
-const Menu = styled(MenuList)({
-  padding: "10 30px"
-});
-const Item = styled(MenuItem)({});
+import PersonIcon from "@material-ui/icons/Person";
+import GroupIcon from "@material-ui/icons/Group";
+import "./AsideMenu.css";
 
 export default function AsideMenu({}) {
   const [allNotes, setAllNotes] = useState(false);
@@ -32,13 +30,22 @@ export default function AsideMenu({}) {
     return <Redirect to="/my-notes" from="/notes" />;
   }
   return (
-    <Menu color="primary" variant="menu">
-      <Item className="MenuItem" onClick={redirectMyNotes}>
-        My Notes
-      </Item>
-      <Item className="MenuItem" onClick={redirectAllNotes}>
-        All Notes
-      </Item>
-    </Menu>
+    <div>
+      <Drawer variant="permanent" open="true" anchor="left" className="menu">
+        <MenuItem className="header-menu"></MenuItem>
+        <hr />
+        <div className="menuItem">
+          <MenuItem onClick={redirectMyNotes}>
+            <PersonIcon className="icon" />
+            My notes
+          </MenuItem>
+        </div>
+        <div className="menuItem">
+          <MenuItem onClick={redirectAllNotes}>
+            <GroupIcon className="icon" /> All Notes
+          </MenuItem>
+        </div>
+      </Drawer>
+    </div>
   );
 }

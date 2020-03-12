@@ -44,7 +44,13 @@ export default function Note({ note, onDelete, typeOfNotes }) {
     }
   }
   if (redirect) {
-    return <Redirect to={`/shared-note/${note}/${typeOfNotes}`} />;
+    const link = `https://notes-app0.herokuapp.com/shared-note/${note}/${typeOfNotes}`;
+    var textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    textarea.value = link;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
   }
   return (
     <div className="note-section">
