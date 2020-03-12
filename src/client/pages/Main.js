@@ -19,7 +19,7 @@ export default function Main({}) {
     } else if (header === "/my-notes") {
       setHeader("My Notes");
     } else if (header === "/shared-note") {
-      setHeader("Note");
+      setHeader("Notes");
     } else {
       setHeader("home");
     }
