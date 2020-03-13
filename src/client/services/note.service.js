@@ -1,36 +1,22 @@
 import request from "./apiService/index";
 const ROUTER_PREFIX = "notes";
-const ROUTES = {
-  READ: "/read",
-  LOADAll: "/readAll",
-  EDIT: "/edit",
-  DELETE: "/delete",
-  ADD: "/add"
-};
 
-function addNote(content, typeOfNotes) {
-  return request.post(ROUTER_PREFIX + ROUTES.ADD + "/" + typeOfNotes, content);
+function addNote(content) {
+  return request.post(ROUTER_PREFIX, content);
 }
 
-function loadAllNotes(typeOfNotes) {
-  return request.get(ROUTER_PREFIX + ROUTES.LOADAll + "/" + typeOfNotes);
+function loadAllNotes() {
+  return request.get(ROUTER_PREFIX);
 }
-function loadNote(title, typeOfNotes) {
-  return request.get(
-    ROUTER_PREFIX + ROUTES.READ + "/" + title + "/" + typeOfNotes
-  );
+function loadNote(title) {
+  return request.get(ROUTER_PREFIX + "/" + title);
 }
-function editNote(content, title, typeOfNotes) {
-  return request.post(
-    ROUTER_PREFIX + ROUTES.EDIT + "/" + title + "/" + typeOfNotes,
-    content
-  );
+function editNote(content, title) {
+  return request.put(ROUTER_PREFIX + "/" + title, content);
 }
 
-function deleteNote(title, typeOfNotes) {
-  return request.deleteData(
-    ROUTER_PREFIX + ROUTES.DELETE + "/" + title + "/" + typeOfNotes
-  );
+function deleteNote(title) {
+  return request.deleteData(ROUTER_PREFIX + "/" + title);
 }
 
 export default { addNote, deleteNote, editNote, loadNote, loadAllNotes };

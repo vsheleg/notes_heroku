@@ -38,7 +38,7 @@ export default function AsideMenu({ access }) {
           <div className="menuItem">
             <MenuItem onClick={redirectMyNotes}>
               <PersonIcon className="icon" />
-              My notes
+              My Notes
             </MenuItem>
           </div>
           <div className="menuItem">

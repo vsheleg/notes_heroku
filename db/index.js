@@ -3,7 +3,7 @@ const sequelize = new Sequelize("notes-app", "postgres", "1111", {
   dialect: "postgres"
 });*/
 const URL =
-  "postgres://evbpjhypvrkidl:ccb677278d33d1a5c8f15c5b8dacdc798ed2c19058adee16ace761811c167389@ec2-18-210-51-239.compute-1.amazonaws.com:5432/d62l46vn1800pf";
+  "postgres://bywfucivzutsgy:39017695285ef71f25ef1eca4cc8a7cb574f65169ffc206af6f7e0e4eb9f954a@ec2-34-204-22-76.compute-1.amazonaws.com:5432/dchk3kjvu4c5hc";
 
 const Sequelize = require("sequelize");
 const match = URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
@@ -18,6 +18,7 @@ sequelize = new Sequelize(match[5], match[1], match[2], {
   host: match[3],
   ssl: true
 });
+sequelize.sync();
 
 const User = sequelize.define("users", {
   user_id: {
@@ -51,25 +52,19 @@ const Notes = sequelize.define("notes", {
   note_content: {
     type: Sequelize.STRING,
     allowNull: true
+  },
+  title: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  privacy: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false
+  },
+  author: {
+    type: Sequelize.INTEGER,
+    allowNull: true
   }
 });
 
-async function getPersonalNotes(user) {
-  user.email = user.email.replace(/\.|@/g, "");
-  const PersonalNotes = sequelize.define(`${user.email}`, {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      allowNull: true
-    },
-    note_content: {
-      type: Sequelize.STRING,
-      allowNull: true
-    }
-  });
-  await sequelize.sync();
-  return PersonalNotes;
-}
-
-module.exports = { User, Notes, getPersonalNotes };
+module.exports = { User, Notes };

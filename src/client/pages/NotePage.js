@@ -9,11 +9,11 @@ import "./NotePage.css";
 export default function NotePage({ onDefineHeader }) {
   const [redirect, setRedirect] = useState(false);
   const [content, setContent] = useState("");
-  const { id, typeOfNotes } = useParams();
-  onDefineHeader("/shared-note");
+  const { id } = useParams();
+  onDefineHeader("/notes");
 
   const updateItems = () => {
-    noteService.loadNote(id, typeOfNotes).then(setContent);
+    noteService.loadNote(id).then(setContent);
   };
 
   useEffect(() => {

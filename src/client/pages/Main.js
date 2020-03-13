@@ -17,8 +17,6 @@ export default function Main({}) {
       setHeader("Notes");
     } else if (header === "/my-notes") {
       setHeader("My Notes");
-    } else if (header === "/shared-note") {
-      setHeader("Notes");
     } else {
       setHeader("Home");
     }
@@ -41,7 +39,7 @@ export default function Main({}) {
           <Route path="/my-notes">
             <App typeOfNotes="personal" onDefineHeader={defineHeader} />
           </Route>
-          <Route path="/shared-note/:id/:typeOfNotes">
+          <Route path="/shared-note/:id">
             <NotePage onDefineHeader={defineHeader} />
           </Route>
         </Switch>
@@ -64,7 +62,7 @@ export default function Main({}) {
         <Route path="/my-notes">
           <App typeOfNotes="personal" onDefineHeader={defineHeader} />
         </Route>
-        <Route path="/shared-note/:id/:typeOfNotes">
+        <Route path="/shared-note/:id">
           <NotePage onDefineHeader={defineHeader} />
         </Route>
       </Switch>

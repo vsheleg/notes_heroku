@@ -2,6 +2,7 @@ const BASEURI = "https://calm-river-32384.herokuapp.com/";
 const KEY = "note-token";
 
 async function request(path, params = {}) {
+  console.log(path);
   const token = await localStorage.getItem(KEY);
   return fetch(BASEURI + path, {
     ...params,
@@ -34,5 +35,11 @@ function post(url, data) {
     body: JSON.stringify(data)
   });
 }
+function put(url, data) {
+  return request(url, {
+    method: "PUT",
+    body: JSON.stringify(data)
+  });
+}
 
-export default { get, post, deleteData };
+export default { get, put, post, deleteData };

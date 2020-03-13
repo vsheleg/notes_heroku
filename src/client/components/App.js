@@ -10,7 +10,8 @@ import noteService from "../services/note.service.js";
 const KEY = "note-token";
 
 export default function App({ onDefineHeader, typeOfNotes }) {
-  const [notes, setNotes] = useState([]);
+  const [personalNotes, setPersonalNotes] = useState([]);
+  const [commonNotes, setCommonNotes] = useState([]);
   const [redirect, setRedirect] = useState(false);
 
   const [loggedUser, setLoggedUser] = useState(true);
@@ -21,13 +22,14 @@ export default function App({ onDefineHeader, typeOfNotes }) {
     setLoggedUser(Boolean(token));
   }
   const updateItems = () => {
-    let result = noteService.loadAllNotes(typeOfNotes);
+    let result = noteService.loadAllNotes();
     result.then(response => {
       if (response.error) {
         alert(response.error.statusText); //Forbidden
         setRedirect(true); //redirects to login
       } else {
-        setNotes(response);
+        setPersonalNotes(response.personal);
+        setCommonNotes(response.common);
       }
     });
   };
@@ -37,13 +39,24 @@ export default function App({ onDefineHeader, typeOfNotes }) {
   }, [typeOfNotes, redirect, loggedUser]);
 
   async function deleteNote(note) {
-    await noteService.deleteNote(note, typeOfNotes);
-    setNotes(notes.filter(elem => elem !== note));
+    await noteService.deleteNote(note);
+    if (typeOfNotes === "all") {
+      setCommonNotes(commonNotes.filter(elem => elem !== note));
+    } else {
+      setPersonalNotes(personalNotes.filter(elem => elem !== note));
+    }
   }
 
   async function addNote(note) {
-    const elem = await noteService.addNote({ value: note }, typeOfNotes);
-    setNotes(notes.concat(elem.note.id));
+    const elem = await noteService.addNote({
+      value: note,
+      privacy: typeOfNotes
+    });
+    if (typeOfNotes === "all") {
+      setCommonNotes(commonNotes.concat(elem.note.id));
+    } else {
+      setPersonalNotes(commonNotes.concat(elem.note.id));
+    }
   }
   function logout() {
     setRedirect(true);
@@ -58,8 +71,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
         <div id="container">
           <NoteList
             access={loggedUser}
-            typeOfNotes={typeOfNotes}
-            notes={notes}
+            notes={commonNotes}
             onDelete={deleteNote}
           />
           <IconButton
@@ -89,8 +101,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
           <AddButton onAdd={addNote} />
           <NoteList
             access={loggedUser}
-            typeOfNotes={typeOfNotes}
-            notes={notes}
+            notes={commonNotes}
             onDelete={deleteNote}
           />
         </div>
@@ -114,7 +125,8 @@ export default function App({ onDefineHeader, typeOfNotes }) {
           <AddButton onAdd={addNote} />
           <NoteList
             typeOfNotes={typeOfNotes}
-            notes={notes}
+            notes={personalNotes}
+            access={loggedUser}
             onDelete={deleteNote}
           />
         </div>

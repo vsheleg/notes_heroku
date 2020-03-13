@@ -1,62 +1,55 @@
 let model = require("../db/index");
 
-async function deleteNote(noteId, typeOfNotes, user) {
-  if (typeOfNotes === "all") {
-    return await model.Notes.destroy({
-      where: {
-        id: noteId
-      }
-    });
-  } else {
-    const personModel = await model.getPersonalNotes(user);
-    return await personModel.destroy({
-      where: {
-        id: noteId
-      }
-    });
-  }
+async function deleteNote(noteId) {
+  return await model.Notes.destroy({
+    where: {
+      id: noteId
+    }
+  });
 }
-async function editNote(body, noteId, typeOfNotes, user) {
-  if (typeOfNotes === "all") {
-    return await model.Notes.update(
-      { note_content: body.val },
-      { where: { id: noteId } }
-    );
-  } else {
-    const personModel = await model.getPersonalNotes(user);
-    return await personModel.update(
-      { note_content: body.val },
-      { where: { id: noteId } }
-    );
-  }
+async function editNote(body, noteId) {
+  return await model.Notes.update(
+    { note_content: body.val },
+    { where: { id: noteId } }
+  );
 }
-async function addNote(body, typeOfNotes, user) {
-  if (typeOfNotes === "all") {
+async function addNote(body, author) {
+  if (author) {
+    const user = await model.User.findOne({ where: { email: author.email } });
+    if (body.privacy === "personal") {
+      //if note added for all or only for user
+      return await model.Notes.create({
+        note_content: body.value,
+        privacy: true,
+        author: user.user_id
+      });
+    } else {
+      return await model.Notes.create({
+        note_content: body.value,
+        privacy: false
+      });
+    }
+  } else {
     return await model.Notes.create({
-      note_content: body.value
-    });
-  } else {
-    const personModel = await model.getPersonalNotes(user);
-    return await personModel.create({
-      note_content: body.value
+      note_content: body.value,
+      privacy: false
     });
   }
 }
-async function getNotes(typeOfNotes, user) {
-  if (typeOfNotes === "all") {
-    return await model.Notes.findAll({ raw: true });
+async function getNotes(author) {
+  const commonNotes = await model.Notes.findAll({ where: { privacy: false } });
+  if (author) {
+    const user = await model.User.findOne({ where: { email: author.email } });
+    const personalNotes = await model.Notes.findAll({
+      where: { author: user.user_id }
+    });
+    return await { personalNotes, commonNotes };
   } else {
-    const personModel = await model.getPersonalNotes(user);
-    return await personModel.findAll({ raw: true });
+    return await { commonNotes };
   }
 }
-async function readNote(noteId, typeOfNotes, user) {
-  if (typeOfNotes === "all") {
-    return await model.Notes.findOne({ where: { id: noteId } });
-  } else {
-    const personModel = await model.getPersonalNotes(user);
-    return await personModel.findOne({ where: { id: noteId } });
-  }
+async function readNote(noteId) {
+  return await model.Notes.findOne({ where: { id: noteId } });
 }
 
 module.exports = { getNotes, readNote, addNote, deleteNote, editNote };

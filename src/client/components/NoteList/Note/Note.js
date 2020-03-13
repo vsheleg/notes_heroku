@@ -18,7 +18,7 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
   document.title = "Notes";
 
   const updateItems = () => {
-    noteService.loadNote(note, typeOfNotes).then(setContent);
+    noteService.loadNote(note).then(setContent);
   };
 
   useEffect(() => {
@@ -35,8 +35,7 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
   async function editItem() {
     if (editInput) {
       const newValue = editDivRef.current.value;
-      console.log(newValue);
-      await noteService.editNote({ val: newValue }, note, typeOfNotes);
+      await noteService.editNote({ val: newValue }, note);
       setContent(newValue);
       setEditInput(false);
     } else {
@@ -44,7 +43,7 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
     }
   }
   if (redirect) {
-    const link = `https://notes-app0.herokuapp.com/shared-note/${note}/${typeOfNotes}`;
+    const link = `https://notes-app0.herokuapp.com/shared-note/${note}`;
     var textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
     textarea.value = link;
