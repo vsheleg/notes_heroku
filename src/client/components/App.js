@@ -60,7 +60,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
     if (typeOfNotes === "all") {
       setCommonNotes(commonNotes.concat(elem.note.id));
     } else {
-      setPersonalNotes(commonNotes.concat(elem.note.id));
+      setPersonalNotes(personalNotes.concat(elem.note.id));
     }
   }
   function logout() {
@@ -129,7 +129,6 @@ export default function App({ onDefineHeader, typeOfNotes }) {
           />
           <AddButton onAdd={addNote} />
           <NoteList
-            typeOfNotes={typeOfNotes}
             notes={personalNotes}
             access={loggedUser}
             onDelete={deleteNote}
