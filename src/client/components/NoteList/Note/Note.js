@@ -38,7 +38,7 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
   }
   function shareNote() {
     setPopover(true);
-    const link = `https://notes-app0.herokuapp.com/shared-note/${note}`;
+    const link = `https://notes-app0.herokuapp.com/${note}`;
     var textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
     textarea.value = link;
