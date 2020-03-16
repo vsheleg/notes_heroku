@@ -16,7 +16,6 @@ import "../../../pages/signup/signup.css";
 
 export default function Note({ note, onDelete, typeOfNotes, access }) {
   const [editInput, setEditInput] = useState(false);
-  const [redirect, setRedirect] = useState(false); //redirect to shared note
   const [content, setContent] = useState("");
   const [popover, setPopover] = useState(false);
   const [title, setTitle] = useState(false);
@@ -39,6 +38,13 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
   }
   function shareNote() {
     setPopover(true);
+    const link = `https://notes-app0.herokuapp.com/shared-note/${note}`;
+    var textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    textarea.value = link;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
   }
   function closeEditItem() {
     setEditInput(false);
@@ -54,20 +60,12 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
     setContent(newValue);
     setEditInput(false);
   }
-  if (redirect) {
-    const link = `https://notes-app0.herokuapp.com/shared-note/${note}`;
-    var textarea = document.createElement("textarea");
-    document.body.appendChild(textarea);
-    textarea.value = link;
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-  }
+
   if (!access) {
     return (
       <div className="note-section">
         <div className="note">
-          <span id="title">{note}</span>
+        <span id="title">{title || note}</span>
           <hr id="title-line" />
           <div className="note-content">{content}</div>
         </div>
