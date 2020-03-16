@@ -9,11 +9,15 @@ import "./NotePage.css";
 export default function NotePage({ onDefineHeader }) {
   const [redirect, setRedirect] = useState(false);
   const [content, setContent] = useState("");
+  const [title, setTitle] = useState(false);
   const { id } = useParams();
   onDefineHeader("/notes");
 
   const updateItems = () => {
-    noteService.loadNote(id).then(setContent);
+    noteService.loadNote(id).then(response => {
+      setContent(response.content);
+      setTitle(response.title);
+    });
   };
 
   useEffect(() => {
@@ -30,7 +34,7 @@ export default function NotePage({ onDefineHeader }) {
     <div className="shared-note">
       <div className="note-section">
         <div className="note">
-          <span id="title">{id}</span>
+          <span id="title">{title || id}</span>
           <hr id="title-line" />
           <div className="note-content"> {content}</div>
         </div>
