@@ -4,7 +4,9 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import noteService from "../../../services/note.service";
+import { Popover } from "@material-ui/core";
 import ShareIcon from "@material-ui/icons/Share";
+import { Modal } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
 import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
 import CloseSharpIcon from "@material-ui/icons/CloseSharp";
@@ -16,22 +18,27 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
   const [editInput, setEditInput] = useState(false);
   const [redirect, setRedirect] = useState(false); //redirect to shared note
   const [content, setContent] = useState("");
+  const [popover, setPopover] = useState(false);
+  const [title, setTitle] = useState(false);
   const editInputRef = useRef(null);
   document.title = "Notes";
-
+  console.log(popover);
   const updateItems = () => {
-    noteService.loadNote(note).then(setContent);
+    noteService.loadNote(note).then(response => {
+      setContent(response.content);
+      setTitle(response.title);
+    });
   };
 
   useEffect(() => {
     updateItems();
-  }, [editInput, typeOfNotes]);
+  }, [editInput, typeOfNotes, popover, title]);
 
   function deleteItem() {
     onDelete(note);
   }
   function shareNote() {
-    setRedirect(true);
+    setPopover(true);
   }
   function closeEditItem() {
     setEditInput(false);
@@ -67,11 +74,12 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
       </div>
     );
   }
+
   if (editInput) {
     return (
       <div className="note-section">
         <div className="note">
-          <span id="title">{note}</span>
+          <span id="title">{title || note}</span>
           <hr id="title-line" />
           <div className="note-content">
             <input
@@ -91,10 +99,18 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
             aria-label="contained primary button group"
           >
             <IconButton edge="end">
-              <DoneIcon color="primary" onClick={editItem} />
+              <DoneIcon
+                className="addNoteInput"
+                color="primary"
+                onClick={editItem}
+              />
             </IconButton>
             <IconButton edge="end">
-              <CloseSharpIcon color="error" onClick={closeEditItem} />
+              <CloseSharpIcon
+                color="error"
+                className="closeEditItem"
+                onClick={closeEditItem}
+              />
             </IconButton>
           </ButtonGroup>
         </div>
@@ -104,7 +120,7 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
   return (
     <div className="note-section">
       <div className="note">
-        <span id="title">{note}</span>
+        <span id="title">{title || note}</span>
         <hr id="title-line" />
         <div className="note-content">{content}</div>
         <div id="button-group">
@@ -141,6 +157,22 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
             >
               <ShareIcon />
             </IconButton>
+            {popover ? (
+              <Modal>
+                <Popover
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left"
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left"
+                  }}
+                >
+                  Copied!
+                </Popover>
+              </Modal>
+            ) : null}
           </ButtonGroup>
         </div>
       </div>

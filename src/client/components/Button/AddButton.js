@@ -7,9 +7,13 @@ import { Input, ButtonGroup } from "@material-ui/core";
 
 export default function AddButton({ onAdd }) {
   const textInputRef = useRef(null);
+  const titleInputRef = useRef(null);
 
   function addNote() {
-    onAdd(textInputRef.current.value);
+    onAdd({
+      content: textInputRef.current.value,
+      title: titleInputRef.current.value
+    });
   }
   return (
     <ButtonGroup
@@ -18,6 +22,14 @@ export default function AddButton({ onAdd }) {
       color="primary"
       aria-label="contained default button group"
     >
+      <Input
+        variant="outlined"
+        className="addTitleInput"
+        name="addNote"
+        inputRef={titleInputRef}
+        placeholder="Add title"
+        inputProps={{ "aria-label": "description" }}
+      />
       <Input
         variant="outlined"
         className="addNoteInput"

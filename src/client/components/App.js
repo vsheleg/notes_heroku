@@ -52,9 +52,11 @@ export default function App({ onDefineHeader, typeOfNotes }) {
 
   async function addNote(note) {
     const elem = await noteService.addNote({
-      value: note,
+      value: note.content,
+      title: note.title,
       privacy: typeOfNotes
     });
+    console.log(typeOfNotes);
     if (typeOfNotes === "all") {
       setCommonNotes(commonNotes.concat(elem.note.id));
     } else {

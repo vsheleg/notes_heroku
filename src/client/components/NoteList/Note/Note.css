@@ -23,7 +23,6 @@ hr#title-line {
 .primary {
     cursor: pointer;
     border: none;
-
     font-family:var(--main-font);
     background-color: var(--add-theme-color);
     color:white;
