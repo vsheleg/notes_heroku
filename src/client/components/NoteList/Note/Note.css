@@ -7,10 +7,6 @@
 body {
     text-align:center;
 }
-div#button-group {
-    
-
-}
 hr#title-line {
     width: 95%;
     background-color: grey;
@@ -50,35 +46,23 @@ hr#title-line {
 }
 
 input#editNote {    
-
+text-align: center;
     display: block;
    width:100%;
    border:none;
    height:100%;
-   background-color:var(--main-note-color);
+   background-color:white;
 
 }
-input#editNote:focus {
-    background-color:var(--main-note-color);
-    border:none;
-    font-size: medium;
-    outline: none;
-    font-family: var(--main-font);
-}
+
 input#editNote:enabled {
-    background-color:var(--main-note-color);
+    background-color:white;
     border:none;
     font-size: medium;
     outline: none;
     font-family: var(--main-font);
 }
-input#editNote:active {
-    background-color:var(--main-note-color);
-    border:none;
-    font-size: medium;
-    outline: none;
-    font-family: var(--main-font);
-}
+
 
 .note-content {
     display: block;
@@ -86,10 +70,10 @@ input#editNote:active {
     word-wrap: break-word;
     width: 90%;
     height: 100px;
-
     background-color: var(--main-note-color);
     border-radius: 3%;
     white-space: normal;
+    text-align: center;
 
 }
 .shared-note {

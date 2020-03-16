@@ -5,7 +5,9 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import noteService from "../../../services/note.service";
 import ShareIcon from "@material-ui/icons/Share";
+import DoneIcon from "@material-ui/icons/Done";
 import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
+import CloseSharpIcon from "@material-ui/icons/CloseSharp";
 import "typeface-roboto";
 import "./Note.css";
 import "../../../pages/signup/signup.css";
@@ -14,7 +16,7 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
   const [editInput, setEditInput] = useState(false);
   const [redirect, setRedirect] = useState(false); //redirect to shared note
   const [content, setContent] = useState("");
-  const editDivRef = useRef(null);
+  const editInputRef = useRef(null);
   document.title = "Notes";
 
   const updateItems = () => {
@@ -31,16 +33,19 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
   function shareNote() {
     setRedirect(true);
   }
-
-  async function editItem() {
-    if (editInput) {
-      const newValue = editDivRef.current.value;
-      await noteService.editNote({ val: newValue }, note);
-      setContent(newValue);
-      setEditInput(false);
-    } else {
+  function closeEditItem() {
+    setEditInput(false);
+  }
+  function showEditItem() {
+    if (!editInput) {
       setEditInput(true);
     }
+  }
+  async function editItem() {
+    const newValue = editInputRef.current.value;
+    await noteService.editNote({ val: newValue }, note);
+    setContent(newValue);
+    setEditInput(false);
   }
   if (redirect) {
     const link = `https://notes-app0.herokuapp.com/shared-note/${note}`;
@@ -62,24 +67,46 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
       </div>
     );
   }
-  return (
-    <div className="note-section">
-      <div className="note">
-        <span id="title">{note}</span>
-        <hr id="title-line" />
-        <div className="note-content">
-          {editInput ? (
+  if (editInput) {
+    return (
+      <div className="note-section">
+        <div className="note">
+          <span id="title">{note}</span>
+          <hr id="title-line" />
+          <div className="note-content">
             <input
               type="text"
               placeholder="Enter new note"
               name="editNote"
               id="editNote"
-              ref={editDivRef}
+              autoFocus
+              value={content}
+              ref={editInputRef}
             />
-          ) : (
-            content
-          )}
+          </div>
+          <ButtonGroup
+            variant="contained"
+            color="primary"
+            size="small"
+            aria-label="contained primary button group"
+          >
+            <IconButton edge="end">
+              <DoneIcon color="primary" onClick={editItem} />
+            </IconButton>
+            <IconButton edge="end">
+              <CloseSharpIcon color="error" onClick={closeEditItem} />
+            </IconButton>
+          </ButtonGroup>
         </div>
+      </div>
+    );
+  }
+  return (
+    <div className="note-section">
+      <div className="note">
+        <span id="title">{note}</span>
+        <hr id="title-line" />
+        <div className="note-content">{content}</div>
         <div id="button-group">
           <ButtonGroup
             variant="contained"
@@ -89,8 +116,8 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
           >
             <IconButton
               className="icon-button"
+              onClick={showEditItem}
               color="default"
-              onClick={editItem}
               name="edit"
             >
               <EditTwoToneIcon />

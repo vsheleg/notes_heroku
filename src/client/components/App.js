@@ -13,10 +13,13 @@ export default function App({ onDefineHeader, typeOfNotes }) {
   const [personalNotes, setPersonalNotes] = useState([]);
   const [commonNotes, setCommonNotes] = useState([]);
   const [redirect, setRedirect] = useState(false);
-
   const [loggedUser, setLoggedUser] = useState(true);
+  if (loggedUser) {
+    onDefineHeader(window.location.pathname);
+  } else {
+    onDefineHeader("/");
+  }
   onDefineHeader(window.location.pathname);
-
   function isLoggedUser() {
     const token = localStorage.getItem(KEY);
     setLoggedUser(Boolean(token));

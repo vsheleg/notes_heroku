@@ -16,13 +16,13 @@ export default function Main({}) {
     if (header === "/notes") {
       setHeader("Notes");
     } else if (header === "/my-notes") {
-      setHeader("My Notes");
+      setHeader("Notes");
     } else {
       setHeader("Home");
     }
     document.title = header;
   }
-  if (header === "Notes" || header === "My Notes") {
+  if (header === "Notes") {
     return (
       <Router>
         <NotesHeader />
@@ -36,11 +36,15 @@ export default function Main({}) {
           <Route path="/notes">
             <App typeOfNotes="all" onDefineHeader={defineHeader} />
           </Route>
+
           <Route path="/my-notes">
             <App typeOfNotes="personal" onDefineHeader={defineHeader} />
           </Route>
           <Route path="/shared-note/:id">
             <NotePage onDefineHeader={defineHeader} />
+          </Route>
+          <Route path="/">
+            <App typeOfNotes="all" onDefineHeader={defineHeader} />
           </Route>
         </Switch>
       </Router>
@@ -61,6 +65,9 @@ export default function Main({}) {
         </Route>
         <Route path="/my-notes">
           <App typeOfNotes="personal" onDefineHeader={defineHeader} />
+        </Route>
+        <Route path="/">
+          <App typeOfNotes="all" onDefineHeader={defineHeader} />
         </Route>
         <Route path="/shared-note/:id">
           <NotePage onDefineHeader={defineHeader} />
