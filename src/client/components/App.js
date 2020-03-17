@@ -70,26 +70,25 @@ export default function App({ onDefineHeader, typeOfNotes }) {
   if (redirect) {
     return <Redirect to="/login" />;
   }
-  if (typeOfNotes === "all") {
-    if (!loggedUser) {
-      return (
-        <div id="container">
-          <NoteList
-            access={loggedUser}
-            notes={commonNotes}
-            onDelete={deleteNote}
-          />
-          <IconButton
-            size="medium"
-            variant="outlined"
-            color="primary"
-            onClick={logout}
-          >
-            <KeyboardReturnIcon />
-          </IconButton>
-        </div>
-      );
-    }
+  if (!loggedUser) {
+    return (
+      <div id="container">
+        {typeOfNotes === "all" ? (<NoteList
+          access={loggedUser}
+          notes={commonNotes}
+          onDelete={deleteNote}
+        />) : <div/>}
+        <IconButton
+          size="medium"
+          variant="outlined"
+          color="primary"
+          onClick={logout}
+        >
+          <KeyboardReturnIcon />
+        </IconButton>
+      </div>
+    );
+  }
     return (
       <div id="container">
         <div id="aside">
@@ -104,38 +103,17 @@ export default function App({ onDefineHeader, typeOfNotes }) {
             id="logout"
           />
           <AddButton onAdd={addNote} />
-          <NoteList
+          {typeOfNotes === "all" ? (<NoteList
             access={loggedUser}
             notes={commonNotes}
             onDelete={deleteNote}
-          />
+          />):<NoteList
+          access={loggedUser}
+          notes={personalNotes}
+          onDelete={deleteNote}
+        />}
+          
         </div>
       </div>
     );
-  }
-  if (typeOfNotes === "personal") {
-    return (
-      <div id="container">
-        <div id="aside">
-          <AsideMenu access={loggedUser} />
-        </div>
-        <div id="content">
-          <input
-            type="button"
-            onClick={logout}
-            name="exit"
-            className="primary"
-            id="logout"
-          />
-          <AddButton onAdd={addNote} />
-          <NoteList
-            notes={personalNotes}
-            access={loggedUser}
-            onDelete={deleteNote}
-          />
-        </div>
-      </div>
-    );
-  }
-  return <div id="app-container"></div>;
 }

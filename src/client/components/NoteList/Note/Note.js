@@ -73,14 +73,12 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
     );
   }
 
-  if (editInput) {
     return (
       <div className="note-section">
         <div className="note">
           <span id="title">{title || note}</span>
           <hr id="title-line" />
-          <div className="note-content">
-            <input
+          {editInput ? ( <div><div className="note-content">  <input
               type="text"
               placeholder="Enter new note"
               name="editNote"
@@ -88,17 +86,17 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
               autoFocus
               value={content}
               ref={editInputRef}
-            />
-          </div>
+            /></div>
           <ButtonGroup
             variant="contained"
             color="primary"
             size="small"
             aria-label="contained primary button group"
           >
-            <IconButton edge="end">
+              <IconButton edge="end">
               <DoneIcon
-                className="addNoteInput"
+                className="addNoteInput edit-icon"
+                size="small"
                 color="primary"
                 onClick={editItem}
               />
@@ -106,29 +104,17 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
             <IconButton edge="end">
               <CloseSharpIcon
                 color="error"
-                className="closeEditItem"
+                size="small"
+                className="closeEditItem edit-icon"
                 onClick={closeEditItem}
               />
-            </IconButton>
-          </ButtonGroup>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div className="note-section">
-      <div className="note">
-        <span id="title">{title || note}</span>
-        <hr id="title-line" />
-        <div className="note-content">{content}</div>
-        <div id="button-group">
-          <ButtonGroup
-            variant="contained"
+            </IconButton></ButtonGroup></div>) : <div>
+            <div className="note-content">{content}</div>
+            <ButtonGroup     variant="contained"
             color="primary"
             aria-label="contained primary button group"
-            size="small"
-          >
-            <IconButton
+            size="small">
+              <IconButton
               className="icon-button"
               onClick={showEditItem}
               color="default"
@@ -170,10 +156,9 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
                   Copied!
                 </Popover>
               </Modal>
-            ) : null}
-          </ButtonGroup>
-        </div>
-      </div>
-    </div>
-  );
-}
+      
+            ) : null}</ButtonGroup>
+            </div>}
+            </div>
+          </div>
+    )}

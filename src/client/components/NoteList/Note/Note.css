@@ -13,6 +13,9 @@ hr#title-line {
     border: none;
     height:1px;
 }
+.edit-icon {
+width: 50%;
+}
 #title {
     font-family: var(--main-font);
     font-size: larger;
