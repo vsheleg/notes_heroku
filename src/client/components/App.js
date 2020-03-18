@@ -14,6 +14,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
   const [commonNotes, setCommonNotes] = useState([]);
   const [loggedUser, setLoggedUser] = useState(true);
   const [selectedNote, setSelectedNote] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   if (window.location.pathname === "/" && loggedUser) {
     onDefineHeader("/notes");
@@ -31,7 +32,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
         alert(response.error.statusText); //Forbidden
       } else {
         setPersonalNotes(response.personal);
-        setCommonNotes(response.common.concat(response.personal));
+        setCommonNotes(response.common);
       }
     });
   };
@@ -43,16 +44,19 @@ export default function App({ onDefineHeader, typeOfNotes }) {
   async function deleteNote(note) {
     await noteService.deleteNote(note);
     if (typeOfNotes === "all") {
-      setCommonNotes(commonNotes.filter(elem => elem !== note));
+      setCommonNotes(
+        commonNotes.concat(personalNotes).filter(elem => elem !== note)
+      );
     } else {
       setPersonalNotes(personalNotes.filter(elem => elem !== note));
     }
   }
   function selectNote(note) {
     setSelectedNote(note);
-    console.log(";" + note);
   }
-
+  function logout() {
+    setRedirect(true);
+  }
   async function addNote(note) {
     const elem = await noteService.addNote({
       value: note.content,
@@ -60,21 +64,28 @@ export default function App({ onDefineHeader, typeOfNotes }) {
       privacy: typeOfNotes
     });
     if (typeOfNotes === "all") {
-      setCommonNotes(commonNotes.concat(elem.note.id));
+      setCommonNotes(commonNotes.concat(personalNotes).concat(elem.note.id));
     } else {
       setPersonalNotes(personalNotes.concat(elem.note.id));
     }
   }
-
+  if (redirect) {
+    return <Redirect to="/login" />;
+  }
   if (!loggedUser) {
     return (
       <div id="container">
         {typeOfNotes === "all" ? (
-          <NoteList
-            access={loggedUser}
-            notes={commonNotes}
-            onDelete={deleteNote}
-          />
+          <div>
+            <NoteList
+              access={loggedUser}
+              notes={commonNotes}
+              onDelete={deleteNote}
+            />
+            <IconButton onClick={logout}>
+              <KeyboardReturnIcon color="primary" />
+            </IconButton>
+          </div>
         ) : (
           <div />
         )}
@@ -88,7 +99,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
           <AsideMenu
             onAdd={addNote}
             onSelect={selectNote}
-            commonNotes={commonNotes}
+            commonNotes={commonNotes.concat(personalNotes)}
             personalNotes={personalNotes}
             access={loggedUser}
           />
@@ -109,7 +120,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
         <AsideMenu
           onAdd={addNote}
           onSelect={selectNote}
-          commonNotes={commonNotes}
+          commonNotes={commonNotes.concat(personalNotes)}
           personalNotes={personalNotes}
           access={loggedUser}
         />
@@ -118,7 +129,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
         {typeOfNotes === "all" ? (
           <NoteList
             access={loggedUser}
-            notes={commonNotes}
+            notes={commonNotes.concat(personalNotes)}
             onDelete={deleteNote}
           />
         ) : (
