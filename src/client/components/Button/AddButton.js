@@ -6,18 +6,28 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
 
 import "./AddButton.css";
-import { Input, ButtonGroup } from "@material-ui/core";
+import {
+  Input,
+  ButtonGroup,
+  RadioGroup,
+  FormControlLabel,
+  Radio
+} from "@material-ui/core";
 
 export default function AddButton({ onAdd }) {
   const textInputRef = useRef(null);
   const titleInputRef = useRef(null);
   const [dialog, setDialog] = useState(false);
+  const [privacy, setPrivacy] = useState(false);
 
   function addNote() {
-    onAdd({
-      content: textInputRef.current.value,
-      title: titleInputRef.current.value
-    });
+    onAdd(
+      {
+        content: textInputRef.current.value,
+        title: titleInputRef.current.value
+      },
+      privacy
+    );
     setDialog(false);
   }
   function handleClose() {
@@ -25,6 +35,13 @@ export default function AddButton({ onAdd }) {
   }
   function handleClickModal() {
     setDialog(true);
+  }
+  function handleChange(event) {
+    if (event.target.value === "private") {
+      setPrivacy(true);
+    } else {
+      setPrivacy(false);
+    }
   }
   return (
     <div>
@@ -48,7 +65,14 @@ export default function AddButton({ onAdd }) {
             <CancelPresentationIcon />
           </IconButton>
         </DialogTitle>
-
+        <RadioGroup aria-label="gender" name="privacy" onChange={handleChange}>
+          <FormControlLabel
+            value="private"
+            control={<Radio />}
+            label="private"
+          />
+          <FormControlLabel value="public" control={<Radio />} label="public" />
+        </RadioGroup>
         <Input
           variant="outlined"
           name="addNote"

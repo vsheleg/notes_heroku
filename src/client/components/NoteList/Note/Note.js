@@ -13,7 +13,7 @@ import "typeface-roboto";
 import "./Note.css";
 import "../../../pages/signup/signup.css";
 
-export default function Note({ note, onDelete, typeOfNotes, access }) {
+export default function Note({ note, onDelete, typeOfNotes, access, type }) {
   const [editInput, setEditInput] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [content, setContent] = useState("");
@@ -30,7 +30,7 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
 
   useEffect(() => {
     updateItems();
-  }, [editInput, typeOfNotes, anchorEl, title]);
+  }, [editInput, typeOfNotes, anchorEl, title, type, note]);
 
   function deleteItem() {
     onDelete(note);
@@ -80,99 +80,193 @@ export default function Note({ note, onDelete, typeOfNotes, access }) {
       </div>
     );
   }
-
-  return (
-    <div className="note-section">
-      <div className="note">
-        <span id="title">{title || note}</span>
-        <hr id="title-line" />
-        {editInput ? (
-          <div>
-            <div className="note-content">
-              <input
-                type="text"
-                placeholder="Enter new note"
-                name="editNote"
-                id="editNote"
-                autoFocus
-                onChange={onEditChange}
-                value={content}
-                ref={editInputRef}
-              />
-            </div>
-            <ButtonGroup
-              variant="contained"
-              color="primary"
-              size="small"
-              aria-label="contained primary button group"
-            >
-              <IconButton edge="end" className="edit-icon">
-                <DoneIcon size="small" color="primary" onClick={editItem} />
-              </IconButton>
-              <IconButton edge="end" className="edit-icon">
-                <CloseSharpIcon
-                  color="error"
-                  size="small"
-                  onClick={closeEditItem}
+  if (type === "preview") {
+    return (
+      <div className="note-section">
+        <div className="note">
+          <span id="title">{title || note}</span>
+          <hr id="title-line" />
+          {editInput ? (
+            <div>
+              <div className="note-content">
+                <input
+                  type="text"
+                  placeholder="Enter new note"
+                  name="editNote"
+                  id="editNote"
+                  autoFocus
+                  onChange={onEditChange}
+                  value={content}
+                  ref={editInputRef}
                 />
-              </IconButton>
-            </ButtonGroup>
-          </div>
-        ) : (
-          <div>
-            <div className="note-content">{content}</div>
-            <ButtonGroup
-              variant="contained"
-              color="primary"
-              aria-label="contained primary button group"
-              size="small"
-            >
-              <IconButton
-                className="icon-button"
-                onClick={showEditItem}
-                color="default"
-                name="edit"
+              </div>
+              <ButtonGroup
+                variant="contained"
+                color="primary"
+                size="small"
+                aria-label="contained primary button group"
               >
-                <EditTwoToneIcon />
-              </IconButton>
-              <IconButton
-                className="icon-button"
-                aria-label="delete"
-                color="default"
-                onClick={deleteItem}
-                edge="end"
-                name="delete"
+                <IconButton edge="end" className="edit-icon">
+                  <DoneIcon size="small" color="primary" onClick={editItem} />
+                </IconButton>
+                <IconButton edge="end" className="edit-icon">
+                  <CloseSharpIcon
+                    color="error"
+                    size="small"
+                    onClick={closeEditItem}
+                  />
+                </IconButton>
+              </ButtonGroup>
+            </div>
+          ) : (
+            <div>
+              <div className="note-content">{content}</div>
+              <ButtonGroup
+                variant="contained"
+                color="primary"
+                aria-label="contained primary button group"
+                size="small"
               >
-                <DeleteIcon />
-              </IconButton>
-              <IconButton
-                ref={iconRef}
-                onClick={shareNote}
-                className="icon-button"
-                color="default"
-                edge="end"
-                name="share"
-              >
-                <ShareIcon />
-                <Popover
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left"
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left"
-                  }}
+                <IconButton
+                  className="icon-button"
+                  onClick={showEditItem}
+                  color="default"
+                  name="edit"
                 >
-                  Copied!
-                </Popover>
-              </IconButton>
-            </ButtonGroup>
-          </div>
-        )}
+                  <EditTwoToneIcon />
+                </IconButton>
+                <IconButton
+                  className="icon-button"
+                  aria-label="delete"
+                  color="default"
+                  onClick={deleteItem}
+                  edge="end"
+                  name="delete"
+                >
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton
+                  ref={iconRef}
+                  onClick={shareNote}
+                  className="icon-button"
+                  color="default"
+                  edge="end"
+                  name="share"
+                >
+                  <ShareIcon />
+                  <Popover
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left"
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left"
+                    }}
+                  >
+                    Copied!
+                  </Popover>
+                </IconButton>
+              </ButtonGroup>
+            </div>
+          )}
+        </div>
       </div>
+    );
+  }
+  return (
+    <div className="fullscreen-note">
+      <span id="fullscreen-title">{title || note}</span>
+      <hr />
+      {editInput ? (
+        <div>
+          <div className="fullscreen-content">
+            <input
+              type="text"
+              placeholder="Enter new note"
+              name="editNote"
+              id="editNote"
+              autoFocus
+              onChange={onEditChange}
+              value={content}
+              ref={editInputRef}
+            />
+          </div>
+
+          <ButtonGroup
+            variant="contained"
+            color="primary"
+            size="small"
+            aria-label="contained primary button group"
+          >
+            <IconButton edge="end" className="edit-icon">
+              <DoneIcon size="small" color="primary" onClick={editItem} />
+            </IconButton>
+            <IconButton edge="end" className="edit-icon">
+              <CloseSharpIcon
+                color="error"
+                size="small"
+                onClick={closeEditItem}
+              />
+            </IconButton>
+          </ButtonGroup>
+        </div>
+      ) : (
+        <div>
+          <div className="fullscreen-content">{content}</div>
+          <ButtonGroup
+            variant="contained"
+            color="primary"
+            aria-label="contained primary button group"
+            size="small"
+          >
+            <IconButton
+              className="icon-button"
+              onClick={showEditItem}
+              color="default"
+              name="edit"
+            >
+              <EditTwoToneIcon />
+            </IconButton>
+            <IconButton
+              className="icon-button"
+              aria-label="delete"
+              color="default"
+              onClick={deleteItem}
+              edge="end"
+              name="delete"
+            >
+              <DeleteIcon />
+            </IconButton>
+            <IconButton
+              ref={iconRef}
+              onClick={shareNote}
+              className="icon-button"
+              color="default"
+              edge="end"
+              name="share"
+            >
+              <ShareIcon />
+              <Popover
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left"
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left"
+                }}
+              >
+                Copied!
+              </Popover>
+            </IconButton>
+          </ButtonGroup>
+        </div>
+      )}
     </div>
   );
 }
