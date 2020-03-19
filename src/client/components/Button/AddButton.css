@@ -17,3 +17,9 @@
   width: 10%;
   float: right;
 }
+.radio-privacy {
+  text-align: center;
+}
+.modal {
+  margin: 0 auto;
+}

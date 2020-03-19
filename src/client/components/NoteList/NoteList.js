@@ -1,9 +1,11 @@
 import React from "react";
-
+import { useState } from "react";
 import "./Note/Note.css";
 import Note from "./Note/Note";
 
 function NoteList({ notes, onDelete, onAdd, onEdit, access, type }) {
+  const [titles, setTitles] = useState([]);
+
   const listNotes = notes.map(elem => (
     <li key={elem}>
       <Note

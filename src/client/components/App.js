@@ -16,6 +16,8 @@ export default function App({ onDefineHeader, typeOfNotes }) {
   const [selectedNote, setSelectedNote] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [viewOfNotes, setViewOfNotes] = useState("preview");
+  const [personalTitles, setPersonalTitles] = useState([]);
+  const [commonTitles, setCommonTitles] = useState([]);
 
   if (window.location.pathname === "/" && loggedUser) {
     onDefineHeader("/notes");
@@ -26,14 +28,21 @@ export default function App({ onDefineHeader, typeOfNotes }) {
     const token = localStorage.getItem(KEY);
     setLoggedUser(Boolean(token));
   }
+
   const updateItems = () => {
     let result = noteService.loadAllNotes();
     result.then(response => {
       if (response.error) {
         alert(response.error.statusText); //Forbidden
       } else {
-        setPersonalNotes(response.personal);
-        setCommonNotes(response.common);
+        for (let i = 0; i < response.personal.length; i++) {
+          setPersonalNotes(personalNotes.concat(response.personal[i].id));
+          setPersonalTitles(personalTitles.concat(response.personal[i].title));
+        }
+        for (let i = 0; i < response.common.length; i++) {
+          setCommonNotes(commonNotes.concat(response.common[i].id));
+          setCommonTitles(commonTitles.concat(response.common[i].title));
+        }
       }
     });
   };
@@ -42,11 +51,13 @@ export default function App({ onDefineHeader, typeOfNotes }) {
     isLoggedUser();
   }, [typeOfNotes, loggedUser, selectedNote, viewOfNotes]);
 
-  async function deleteNote(note) {
+  async function deleteNote(note, title) {
     await noteService.deleteNote(note);
     console.log(note);
     setCommonNotes(commonNotes.filter(elem => elem !== note));
     setPersonalNotes(personalNotes.filter(elem => elem !== note));
+    setCommonTitles(commonTitles.filter(elem => elem !== title));
+    setPersonalTitles(personalTitles.filter(elem => elem !== title));
   }
   function selectNote(note) {
     setSelectedNote(note);
@@ -65,10 +76,13 @@ export default function App({ onDefineHeader, typeOfNotes }) {
     });
     if (!privacy) {
       setCommonNotes(commonNotes.concat(elem.note.id));
+      setCommonTitles(commonTitles.concat(elem.note.title));
     } else {
       setPersonalNotes(personalNotes.concat(elem.note.id));
+      setPersonalTitles(personalTitles.concat(elem.note.title));
     }
   }
+
   if (redirect) {
     return <Redirect to="/login" />;
   }
@@ -100,8 +114,8 @@ export default function App({ onDefineHeader, typeOfNotes }) {
           <AsideMenu
             addNote={addNote}
             onSelect={selectNote}
-            commonNotes={commonNotes.concat(personalNotes)}
-            personalNotes={personalNotes}
+            commonNotes={commonTitles}
+            personalNotes={personalTitles}
             access={loggedUser}
           />
         </div>
@@ -122,8 +136,8 @@ export default function App({ onDefineHeader, typeOfNotes }) {
         <AsideMenu
           addNote={addNote}
           onSelect={selectNote}
-          commonNotes={commonNotes.concat(personalNotes)}
-          personalNotes={personalNotes}
+          commonNotes={commonTitles}
+          personalNotes={personalTitles}
           access={loggedUser}
         />
       </div>

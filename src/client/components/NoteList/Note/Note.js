@@ -15,25 +15,26 @@ import "../../../pages/signup/signup.css";
 
 export default function Note({ note, onDelete, typeOfNotes, access, type }) {
   const [editInput, setEditInput] = useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState(false);
   const editInputRef = useRef(null);
-  const iconRef = React.useRef();
+  const iconRef = useRef();
   document.title = "Notes";
+  console.log("content is " + content);
+  console.log(editInput);
   const updateItems = () => {
     noteService.loadNote(note).then(response => {
       setContent(response.content);
       setTitle(response.title);
     });
   };
-
   useEffect(() => {
     updateItems();
-  }, [editInput, typeOfNotes, anchorEl, title, type, note]);
+  }, [editInput, typeOfNotes, type, note]);
 
   function deleteItem() {
-    onDelete(note);
+    onDelete(note, title);
   }
   function shareNote() {
     setAnchorEl(iconRef.current);
@@ -53,20 +54,21 @@ export default function Note({ note, onDelete, typeOfNotes, access, type }) {
     setEditInput(false);
   }
   function showEditItem() {
-    if (!editInput) {
-      setEditInput(true);
-    }
+    setEditInput(true);
   }
-  function onEditChange(e) {
+  /*function onEditChange(e) {
     const { value } = e.target;
     setContent(value);
   }
-
+*/
   async function editItem() {
+    console.log(editInput);
     const newValue = editInputRef.current.value;
+
     await noteService.editNote({ val: newValue }, note);
     setContent(newValue);
-    setEditInput(false);
+    closeEditItem();
+    console.log(editInput);
   }
 
   if (!access) {
@@ -94,9 +96,6 @@ export default function Note({ note, onDelete, typeOfNotes, access, type }) {
                   placeholder="Enter new note"
                   name="editNote"
                   id="editNote"
-                  autoFocus
-                  onChange={onEditChange}
-                  value={content}
                   ref={editInputRef}
                 />
               </div>
@@ -106,15 +105,15 @@ export default function Note({ note, onDelete, typeOfNotes, access, type }) {
                 size="small"
                 aria-label="contained primary button group"
               >
-                <IconButton edge="end" className="edit-icon">
-                  <DoneIcon size="small" color="primary" onClick={editItem} />
+                <IconButton edge="end" className="edit-icon" onClick={editItem}>
+                  <DoneIcon size="small" color="primary" />
                 </IconButton>
-                <IconButton edge="end" className="edit-icon">
-                  <CloseSharpIcon
-                    color="error"
-                    size="small"
-                    onClick={closeEditItem}
-                  />
+                <IconButton
+                  edge="end"
+                  className="edit-icon"
+                  onClick={closeEditItem}
+                >
+                  <CloseSharpIcon color="error" size="small" />
                 </IconButton>
               </ButtonGroup>
             </div>
@@ -189,8 +188,6 @@ export default function Note({ note, onDelete, typeOfNotes, access, type }) {
               name="editNote"
               id="editNote"
               autoFocus
-              onChange={onEditChange}
-              value={content}
               ref={editInputRef}
             />
           </div>
@@ -201,15 +198,15 @@ export default function Note({ note, onDelete, typeOfNotes, access, type }) {
             size="small"
             aria-label="contained primary button group"
           >
-            <IconButton edge="end" className="edit-icon">
-              <DoneIcon size="small" color="primary" onClick={editItem} />
+            <IconButton edge="end" className="edit-icon" onClick={editItem}>
+              <DoneIcon size="small" color="primary" />
             </IconButton>
-            <IconButton edge="end" className="edit-icon">
-              <CloseSharpIcon
-                color="error"
-                size="small"
-                onClick={closeEditItem}
-              />
+            <IconButton
+              edge="end"
+              className="edit-icon"
+              onClick={closeEditItem}
+            >
+              <CloseSharpIcon color="error" size="small" />
             </IconButton>
           </ButtonGroup>
         </div>

@@ -64,8 +64,9 @@ input#editNote {
 
 .fullscreen-note {
   display: block;
+  word-wrap: break-word;
   bottom: 0;
-  width: 90%;
+  width: 80%;
   padding: 0;
   margin: 0;
 }
@@ -90,6 +91,7 @@ input#editNote:enabled {
   background-color: var(--main-note-color);
   border-radius: 3%;
   white-space: normal;
+  overflow: hidden;
   text-align: center;
 }
 
