@@ -19,6 +19,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import GroupIcon from "@material-ui/icons/Group";
 import "./AsideMenu.css";
 import "../components/Button/AddButton.css";
+import noteService from "../services/note.service";
 
 export default function AsideMenu({
   access,
@@ -31,11 +32,35 @@ export default function AsideMenu({
   const [redirect, setRedirect] = useState(false);
   const [openMyNotes, setOpenMyNotes] = useState(false);
   const [selectedNote, setSelectedNote] = useState(false);
+  const [notes, setNotes] = useState({});
 
   function handleSelectNote(event) {
-    setSelectedNote(Number(event.target.innerText));
-    onSelect(Number(event.target.innerText));
+    for (let key in notes) {
+      for (let i = 0; i < notes[key].length; i++) {
+        if (event.target.innerText === notes[key][i].title) {
+          setSelectedNote(notes[key][i].id, notes[key][i].title);
+          onSelect(notes[key][i].id);
+        }
+      }
+    }
   }
+  async function updateItems() {
+    let result = noteService.loadAllNotes();
+    result.then(response => {
+      console.log(response);
+      setNotes(response);
+      /*     setPersonalNotes(response.personal.map(elem => elem.id));
+          setPersonalTitles(response.personal.map(elem => elem.title));
+      
+
+        setCommonNotes(response.common.map(elem => elem.id));
+        setCommonTitles(response.common.map(elem => elem.title));
+      */
+    });
+  }
+  useEffect(() => {
+    updateItems();
+  }, [commonNotes, personalNotes]);
   function handleAllNotes() {
     setOpenAllNotes(!openAllNotes);
   }
@@ -52,12 +77,12 @@ export default function AsideMenu({
 
   if (access) {
     const listPersonalNotes = personalNotes.map(elem => (
-      <ListItem button onClick={handleSelectNote}>
+      <ListItem key={elem} button onClick={handleSelectNote}>
         <ListItemText inset primary={elem} />
       </ListItem>
     ));
     const listAllNotes = commonNotes.map(elem => (
-      <ListItem button onClick={handleSelectNote}>
+      <ListItem key={elem} button onClick={handleSelectNote}>
         <ListItemText inset primary={elem} />
       </ListItem>
     ));

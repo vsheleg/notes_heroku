@@ -17,12 +17,11 @@ export default function Note({ note, onDelete, typeOfNotes, access, type }) {
   const [editInput, setEditInput] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [content, setContent] = useState("");
-  const [title, setTitle] = useState(false);
+  const [title, setTitle] = useState("");
   const editInputRef = useRef(null);
   const iconRef = useRef();
   document.title = "Notes";
-  console.log("content is " + content);
-  console.log(editInput);
+
   const updateItems = () => {
     noteService.loadNote(note).then(response => {
       setContent(response.content);
@@ -68,7 +67,6 @@ export default function Note({ note, onDelete, typeOfNotes, access, type }) {
     await noteService.editNote({ val: newValue }, note);
     setContent(newValue);
     closeEditItem();
-    console.log(editInput);
   }
 
   if (!access) {
