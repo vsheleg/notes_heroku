@@ -17,10 +17,14 @@ hr#title-line {
   width: 50%;
 }
 #title {
+  display: block;
   font-family: var(--main-font);
-  font-size: larger;
+  font-size: 100%;
   color: grey;
+  word-wrap: break-word;
+  overflow: hidden;
   padding: 3px 8px;
+  height: 10%;
 }
 
 .primary {

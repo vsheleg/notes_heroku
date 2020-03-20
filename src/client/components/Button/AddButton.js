@@ -12,7 +12,8 @@ import {
   RadioGroup,
   FormControlLabel,
   Popover,
-  Radio
+  Radio,
+  Checkbox
 } from "@material-ui/core";
 
 export default function AddButton({ onAdd }) {
@@ -22,6 +23,7 @@ export default function AddButton({ onAdd }) {
   const textInputRef = useRef(null);
   const titleInputRef = useRef(null);
   const radioPublicRef = useRef(null);
+  const checkboxRef = useRef(null);
   const radioPrivateRef = useRef(null);
   const [dialog, setDialog] = useState(false);
   const [privacy, setPrivacy] = useState(false);
@@ -45,7 +47,7 @@ export default function AddButton({ onAdd }) {
     setDialog(true);
   }
   function handleChange(event) {
-    if (event.target.value === "private") {
+    if (event.target.checked) {
       setPrivacy(true);
     } else {
       setPrivacy(false);
@@ -61,12 +63,7 @@ export default function AddButton({ onAdd }) {
     setAnchorTitleEl(null);
   }
   function validatePrivacy() {
-    if (radioPrivateRef.current.checked || radioPublicRef.current.checked) {
-      return true;
-    }
-    setAnchorRadioEl(radioPrivateRef.current);
-    setTimeout(closeRadioPopover, 1500);
-    return false;
+    return true;
   }
   function validateTextFields() {
     let result = false;
@@ -108,28 +105,17 @@ export default function AddButton({ onAdd }) {
             <CancelPresentationIcon />
           </IconButton>
         </DialogTitle>
-        <RadioGroup
-          className="modal"
-          row={true}
-          aria-label="gender"
-          name="privacy"
-          onChange={handleChange}
-        >
-          <FormControlLabel
-            className="radio-privacy"
-            value="private"
-            inputRef={radioPrivateRef}
-            control={<Radio />}
-            label="private"
-          />
-          <FormControlLabel
-            value="public"
-            inputRef={radioPublicRef}
-            className="radio-privacy"
-            control={<Radio />}
-            label="public"
-          />
-        </RadioGroup>
+        <FormControlLabel
+          inputRef={checkboxRef}
+          control={
+            <Checkbox
+              checked={privacy}
+              onChange={handleChange}
+              name="privacy"
+            />
+          }
+          label="Secret"
+        />
         <Popover
           anchorEl={anchorRadioEl}
           open={Boolean(anchorRadioEl)}

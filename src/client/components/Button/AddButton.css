@@ -22,4 +22,8 @@
 }
 .modal {
   margin: 0 auto;
+  text-align: center;
+}
+.checkbox {
+  width: 50%;
 }
