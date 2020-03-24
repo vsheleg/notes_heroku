@@ -1,20 +1,14 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
-import { IconButton } from "@material-ui/core";
 import { MenuItem } from "@material-ui/core";
 import { List, ListItem, ListItemIcon } from "@material-ui/core";
 import IconExpandLess from "@material-ui/icons/ExpandLess";
 import IconExpandMore from "@material-ui/icons/ExpandMore";
 import AddButton from "../components/Button/AddButton";
-import {
-  Drawer,
-  Select,
-  ListItemText,
-  Collapse,
-  Divider
-} from "@material-ui/core";
+import { Drawer, ListItemText, Collapse, Divider } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
+import HomeIcon from "@material-ui/icons/Home";
 import PersonIcon from "@material-ui/icons/Person";
 import GroupIcon from "@material-ui/icons/Group";
 import "./AsideMenu.css";
@@ -47,15 +41,7 @@ export default function AsideMenu({
   async function updateItems() {
     let result = noteService.loadAllNotes();
     result.then(response => {
-      console.log(response);
       setNotes(response);
-      /*     setPersonalNotes(response.personal.map(elem => elem.id));
-          setPersonalTitles(response.personal.map(elem => elem.title));
-      
-
-        setCommonNotes(response.common.map(elem => elem.id));
-        setCommonTitles(response.common.map(elem => elem.title));
-      */
     });
   }
   useEffect(() => {
@@ -70,6 +56,12 @@ export default function AsideMenu({
   function logout() {
     setRedirect(true);
   }
+  function handleHome() {
+    setOpenAllNotes(false);
+    setOpenMyNotes(false);
+
+    onSelect("all");
+  }
 
   if (redirect) {
     return <Redirect to="/login" />;
@@ -77,12 +69,22 @@ export default function AsideMenu({
 
   if (access) {
     const listPersonalNotes = personalNotes.map(elem => (
-      <ListItem key={elem} button onClick={handleSelectNote}>
+      <ListItem
+        className="menu-elem"
+        key={elem}
+        button
+        onClick={handleSelectNote}
+      >
         <ListItemText inset primary={elem} />
       </ListItem>
     ));
     const listAllNotes = commonNotes.map(elem => (
-      <ListItem key={elem} button onClick={handleSelectNote}>
+      <ListItem
+        className="menu-elem"
+        key={elem}
+        button
+        onClick={handleSelectNote}
+      >
         <ListItemText inset primary={elem} />
       </ListItem>
     ));
@@ -94,6 +96,12 @@ export default function AsideMenu({
         <List disablePadding>
           <ListItem button>
             <AddButton onAdd={addNote} />
+          </ListItem>
+          <ListItem button onClick={handleHome}>
+            <ListItemIcon>
+              <HomeIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
           </ListItem>
           <ListItem button onClick={handleMyNotes}>
             <ListItemIcon>

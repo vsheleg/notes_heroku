@@ -8,6 +8,7 @@
   height: 40px;
   padding: 10px 0px;
 }
+
 hr {
   opacity: 0.5;
 }
@@ -15,6 +16,10 @@ hr {
   margin: 20px 10px 5px 5px;
 }
 .MuiDrawer-paper {
+  overflow: hidden;
+}
+.menu-elem {
+  width: 200px;
   overflow: hidden;
 }
 
@@ -31,5 +36,6 @@ hr {
   background-size: 30px 30px;
   background-image: url("../components/NoteList/Note/images/logout.png");
 }
-.logout-block {
+.MuiDrawer-paper {
+  width: 17%;
 }

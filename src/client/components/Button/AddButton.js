@@ -14,7 +14,6 @@ import {
   Popover,
   Radio,
   TextareaAutosize,
-  TextField,
   Checkbox
 } from "@material-ui/core";
 
@@ -158,7 +157,7 @@ export default function AddButton({ onAdd }) {
           rowsMin="10"
           variant="outlined"
           name="addNote"
-          inputRef={textInputRef}
+          ref={textInputRef}
           className="add-button add-content"
           placeholder="Add new note"
           inputProps={{ "aria-label": "description" }}

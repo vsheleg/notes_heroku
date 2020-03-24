@@ -7,7 +7,6 @@ import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
 import { IconButton } from "@material-ui/core";
 import "./App.css";
 import noteService from "../services/note.service.js";
-import { isCompositeComponentWithType } from "react-dom/test-utils";
 const KEY = "note-token";
 
 export default function App({ onDefineHeader, typeOfNotes }) {
@@ -19,7 +18,7 @@ export default function App({ onDefineHeader, typeOfNotes }) {
   const [viewOfNotes, setViewOfNotes] = useState("preview");
   const [personalTitles, setPersonalTitles] = useState([]);
   const [commonTitles, setCommonTitles] = useState([]);
-  console.log(commonNotes, personalNotes);
+
   if (window.location.pathname === "/" && loggedUser) {
     onDefineHeader("/notes");
   } else {
@@ -52,20 +51,22 @@ export default function App({ onDefineHeader, typeOfNotes }) {
   }, [typeOfNotes, loggedUser, selectedNote, viewOfNotes]);
 
   async function deleteNote(note, title) {
-    console.log(typeof note);
-    console.log(note, title);
-    console.log(commonNotes, personalNotes);
     await noteService.deleteNote(note);
     setCommonNotes(commonNotes.filter(elem => elem !== Number(note)));
     setPersonalNotes(personalNotes.filter(elem => elem !== Number(note)));
     setCommonTitles(commonTitles.filter(elem => elem !== title));
     setPersonalTitles(personalTitles.filter(elem => elem !== title));
-
-    console.log(commonNotes, personalNotes);
   }
   function selectNote(note) {
-    setSelectedNote(note);
-    setViewOfNotes("fullscreen");
+    console.log(note);
+    console.log(typeOfNotes);
+    if (note === "all") {
+      setSelectedNote(false);
+      setViewOfNotes("preview");
+    } else {
+      setSelectedNote(note);
+      setViewOfNotes("fullscreen");
+    }
   }
   function logout() {
     setRedirect(true);
