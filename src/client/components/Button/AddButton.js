@@ -13,6 +13,8 @@ import {
   FormControlLabel,
   Popover,
   Radio,
+  TextareaAutosize,
+  TextField,
   Checkbox
 } from "@material-ui/core";
 
@@ -152,7 +154,8 @@ export default function AddButton({ onAdd }) {
         >
           Please enter note title
         </Popover>
-        <Input
+        <TextareaAutosize
+          rowsMin="10"
           variant="outlined"
           name="addNote"
           inputRef={textInputRef}

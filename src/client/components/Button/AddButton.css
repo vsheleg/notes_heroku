@@ -1,9 +1,16 @@
+:root {
+  --main-note-color: #f8dfc2;
+  --add-theme-color: #013ca6;
+  --main-font: "Roboto";
+}
 .addNoteInput {
   padding: 8px 11px 7px;
   width: 70%;
 }
 .add-button {
   padding: 8px 11px 7px;
+  font-family: var(--main-font);
+  font-size: 15px;
 }
 .buttonGroup {
   margin-top: 20px;
